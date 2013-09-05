@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"github.com/jdiez17/irc-go"
-	"strings"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -30,9 +30,9 @@ func main() {
 	conn.LogIn(irc.Identity{Nick: Config.Nick})
 
 	conn.AddHandler(irc.MOTD_END, func(c *irc.Connection, e *irc.Event) {
-		if Config.NickServPassword != ""{
-			c.Privmsg("NickServ","identify "+Config.NickServPassword)
-			}
+		if Config.NickServPassword != "" {
+			c.Privmsg("NickServ", "identify "+Config.NickServPassword)
+		}
 
 		for _, channel := range Config.Channels {
 			c.Join(channel)
@@ -41,21 +41,20 @@ func main() {
 
 	bot := irc.NewBot(conn)
 	bot.AddCommand("join", func(c *irc.Connection, e *irc.Event) {
-			if e.Payload["sender"] == "Zen"{
-				c.Join(e.Params[0])
-			}
-		})
+		if e.Payload["sender"] == "Zen!lutzee@lutzee.net" {
+			c.Join(e.Params[0])
+		}
+	})
 	bot.AddCommand("part", func(c *irc.Connection, e *irc.Event) {
-			if e.Payload["sender"] == "Zen"{
-				c.Part(e.Params[0])
-			}
-		})
+		if e.Payload["sender"] == "Zen!lutzee@lutzee.net" {
+			c.Part(e.Params[0])
+		}
+	})
 	bot.AddCommand("echo", func(c *irc.Connection, e *irc.Event) {
-			message := strings.Join(e.Params, "  ")
-			e.React(c, message)
-		})
+		message := strings.Join(e.Params, "  ")
+		e.React(c, message)
+	})
 	for {
 		<-time.After(1 * time.Second)
 	}
 }
-

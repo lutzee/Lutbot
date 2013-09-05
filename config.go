@@ -1,15 +1,15 @@
 package main
 
 import (
-		"encoding/json"
-		"io/ioutil"
-		"os"
+	"encoding/json"
+	"io/ioutil"
+	"os"
 )
 
 type ircConfig struct {
 	Server string
 	Port   float64
-	}
+}
 
 type config struct {
 	IRC              *ircConfig
@@ -21,17 +21,16 @@ type config struct {
 var Config *config = new(config)
 
 func loadConfig(path string) error {
-		file, err := os.Open(path)
-		if err != nil {
+	file, err := os.Open(path)
+	if err != nil {
 		return err
 	}
 
 	bytes, err := ioutil.ReadAll(file)
 	if err != nil {
-	return err
+		return err
 	}
-	
+
 	err = json.Unmarshal(bytes, Config)
 	return err
 }
-
