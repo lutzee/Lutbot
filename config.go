@@ -16,6 +16,7 @@ type config struct {
 	Nick             string
 	NickServPassword string
 	Channels         []string
+	Admins			 []string
 }
 
 var Config *config = new(config)

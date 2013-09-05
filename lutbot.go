@@ -41,13 +41,17 @@ func main() {
 
 	bot := irc.NewBot(conn)
 	bot.AddCommand("join", func(c *irc.Connection, e *irc.Event) {
-		if e.Payload["sender"] == "Zen!lutzee@lutzee.net" {
-			c.Join(e.Params[0])
+		for _, admin := range Config.Admins {	
+			if e.Payload["sender"] == admin  {
+				c.Join(e.Params[0] + e.Params[1])
+			}
 		}
 	})
 	bot.AddCommand("part", func(c *irc.Connection, e *irc.Event) {
-		if e.Payload["sender"] == "Zen!lutzee@lutzee.net" {
-			c.Part(e.Params[0])
+		for _, admin := range Config.Admins {	
+			if e.Payload["sender"] == admin {
+				c.Part(e.Params[0] + e.Params[1])
+			}
 		}
 	})
 	bot.AddCommand("echo", func(c *irc.Connection, e *irc.Event) {
