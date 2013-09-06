@@ -58,6 +58,10 @@ func main() {
 		message := strings.Join(e.Params, " ")
 		e.React(c, message)
 	})
+	bot.AddCommand("help", func(c *irc.Connection, e *irc.Event) {
+		message := Config.Help
+		e.React(c, message)
+	})
 	bot.AddCommand("remind", remindCommandHandler)
 
 	for {
