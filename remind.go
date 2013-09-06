@@ -21,6 +21,7 @@ func remindCommandHandler(c *irc.Connection, e *irc.Event) {
 	sleepTime := time.Duration(inputTime)
 	if sleepTime > time.Hour*24*7 {
 		e.React(c, "Duration specified is not allowed!")
+		return
 	}
 	time.Sleep(sleepTime * time.Minute)
 	message := "This is your " + inputTimeS + " minute reminder " + strings.Join(e.Params[1:], " ")
