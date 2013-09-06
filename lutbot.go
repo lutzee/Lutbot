@@ -41,23 +41,25 @@ func main() {
 
 	bot := irc.NewBot(conn)
 	bot.AddCommand("join", func(c *irc.Connection, e *irc.Event) {
-		for _, admin := range Config.Admins {	
-			if e.Payload["sender"] == admin  {
+		for _, admin := range Config.Admins {
+			if e.Payload["sender"] == admin {
 				c.Join(e.Params[0] + e.Params[1])
 			}
 		}
 	})
 	bot.AddCommand("part", func(c *irc.Connection, e *irc.Event) {
-		for _, admin := range Config.Admins {	
+		for _, admin := range Config.Admins {
 			if e.Payload["sender"] == admin {
 				c.Part(e.Params[0] + e.Params[1])
 			}
 		}
 	})
 	bot.AddCommand("echo", func(c *irc.Connection, e *irc.Event) {
-		message := strings.Join(e.Params, "  ")
+		message := strings.Join(e.Params, " ")
 		e.React(c, message)
 	})
+	bot.AddCommand("remind", remindCommandHandler)
+
 	for {
 		<-time.After(1 * time.Second)
 	}
