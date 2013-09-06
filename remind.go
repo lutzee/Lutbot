@@ -13,12 +13,16 @@ func remindCommandHandler(c *irc.Connection, e *irc.Event) {
 		return
 	}
 	inputTimeS := e.Params[0]
-	inputTime, err := strconv.ParseInt(e.Params[0], 0, 64)
+	inputTime, err := strconv.ParseFloat(e.Params[0], 64)
 	if err != nil {
 		e.React(c, "Invalid time format!")
 		return
 	}
-	time.Sleep(time.Duration(inputTime) * time.Minute)
+	sleepTime := time.Duration(inputTime)
+	if sleepTime > time.Hour*24*7 {
+		e.React(c, "Duration specified is not allowed!")
+	}
+	time.Sleep(sleepTime * time.Minute)
 	message := "This is your " + inputTimeS + " minute reminder " + strings.Join(e.Params[1:], " ")
 	e.React(c, message)
 }
