@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/jdiez17/irc-go"
 	"strconv"
 	"strings"
@@ -18,12 +19,13 @@ func remindCommandHandler(c *irc.Connection, e *irc.Event) {
 		e.React(c, "Invalid time format!")
 		return
 	}
-	sleepTime := time.Duration(inputTime) * time.Minute
-	if sleepTime > time.Hour*24*7 {
+	sleepTime := inputTime * float64(time.Minute)
+	if time.Duration(sleepTime) > time.Hour*24*7 {
 		e.React(c, "Duration specified is not allowed!")
 		return
 	}
-	time.Sleep(sleepTime * time.Minute)
+	fmt.Println(time.Duration(sleepTime))
+	time.Sleep(time.Duration(sleepTime))
 	message := "This is your " + inputTimeS + " minute reminder " + strings.Join(e.Params[1:], " ")
 	e.React(c, message)
 }
