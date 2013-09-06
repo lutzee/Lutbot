@@ -1,0 +1,18 @@
+{
+    "IRC": {
+        "Server": "irc.freenode.net",
+        "Port": 6667
+    },
+
+    "Nick": "!!BotName!!",
+    "NickServPassword": "!!ChangeMe!!",
+
+    "Channels": [
+        "#examplechannel"
+        ],
+    "Admins": [
+        "nick!user@host.mask"
+            ],
+    "Help": "Commands available: .join[A] .part[A] .echo .remind"
+}
+
